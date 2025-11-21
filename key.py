@@ -6,6 +6,8 @@ import torch.nn as nn
 import os
 import math
 
+from tts_utils import speak
+
 # --- Try to import pynput for system-wide keyboard control ---
 try:
     from pynput.keyboard import Key, Controller
@@ -64,6 +66,7 @@ mp_draw = mp.solutions.drawing_utils
 cap = cv2.VideoCapture(0)
 ret, frame = cap.read()
 if not ret:
+    speak('cannot open camera')
     raise RuntimeError("Cannot open webcam")
 h_frame, w_frame = frame.shape[:2]
 canvas = np.zeros((h_frame, w_frame), dtype=np.uint8) 
@@ -242,6 +245,7 @@ def process_and_commit_letter():
 
     # Type the letter to the system
     if keyboard and letter_to_type:
+        speak(f'{letter_to_type}')
         keyboard.type(letter_to_type)
 
 

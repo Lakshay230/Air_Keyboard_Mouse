@@ -1,5 +1,6 @@
 import cv2
 import mediapipe as mp
+from tts_utils import speak
 import util
 import pyautogui
 from pynput.mouse import Button, Controller
@@ -164,10 +165,12 @@ def detect_gestures(frame, landmarks_list, processed):
             cv2.putText(frame, "SCROLL MODE", (50, 100),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
             if are_scroll_fingers_down(angles):
+                speak("Scrolling Down")
                 pyautogui.scroll(-SCROLL_SPEED) # Scroll Down
                 cv2.putText(frame, "DOWN", (50, 150),
                             cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
             elif are_scroll_fingers_up(angles):
+                speak("Scrolling Up")
                 pyautogui.scroll(SCROLL_SPEED) # Scroll Up
                 cv2.putText(frame, "UP", (50, 150),
                             cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
@@ -189,10 +192,12 @@ def detect_gestures(frame, landmarks_list, processed):
                 # If finger moves UP (delta_y < 0), we want to ZOOM IN (ctrl +)
                 # If finger moves DOWN (delta_y > 0), we want to ZOOM OUT (ctrl -)
                 if zoom_steps < 0:
+                    speak("Zooming In")
                     pyautogui.hotkey('ctrl', '+')
                     cv2.putText(frame, "ZOOM IN", (50, 150),
                                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
                 else:
+                    speak("Zooming Out")
                     pyautogui.hotkey('ctrl', '-')
                     cv2.putText(frame, "ZOOM OUT", (50, 150),
                                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
@@ -206,6 +211,7 @@ def detect_gestures(frame, landmarks_list, processed):
             
             # Check for screenshot (Hang Loose 🤙)
             if is_screenshot(angles, thumb_index_dist):
+                 speak("Taking Screenshot")
                  im1 = pyautogui.screenshot()
                  label = random.randint(1, 1000)
                  im1.save(f'my_screenshot_{label}.png')
@@ -214,18 +220,21 @@ def detect_gestures(frame, landmarks_list, processed):
             
             # Clicks
             elif is_left_click(angles, thumb_index_dist):
+                speak("Clicking Left")
                 mouse.press(Button.left)
                 mouse.release(Button.left)
                 cv2.putText(frame, "Left Click", (50, 50),
                             cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
             elif is_right_click(angles, thumb_index_dist):
+                speak("Clicking Right")
                 mouse.press(Button.right)
                 mouse.release(Button.right)
                 cv2.putText(frame, "Right Click", (50, 50),
                             cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
             elif is_double_click(angles, thumb_index_dist):
+                speak("Double Click")
                 pyautogui.doubleClick()
                 cv2.putText(frame, "Double Click", (50, 50),
                             cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
