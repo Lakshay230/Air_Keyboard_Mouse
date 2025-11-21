@@ -6,9 +6,7 @@ import torch.nn as nn
 import os
 import math
 
-from tts_utils import speak
-
-# --- Try to import pynput for system-wide keyboard control ---
+# Try to import pynput for system-wide keyboard control
 try:
     from pynput.keyboard import Key, Controller
     keyboard = Controller()
@@ -27,7 +25,7 @@ CLASS_MAPPING = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 if not os.path.exists(MODEL_PATH):
     raise FileNotFoundError(f"{MODEL_PATH} not found. Train model first (run train_model_byclass.py).")
 
-# NEW: --- Create a directory to save screenshots ---
+# Create a directory to save screenshots ---
 os.makedirs("screenshots", exist_ok=True)
 screenshot_counter = 0
 print("Screenshots will be saved to the 'screenshots' folder.")
@@ -66,7 +64,6 @@ mp_draw = mp.solutions.drawing_utils
 cap = cv2.VideoCapture(0)
 ret, frame = cap.read()
 if not ret:
-    speak('cannot open camera')
     raise RuntimeError("Cannot open webcam")
 h_frame, w_frame = frame.shape[:2]
 canvas = np.zeros((h_frame, w_frame), dtype=np.uint8) 
@@ -245,7 +242,6 @@ def process_and_commit_letter():
 
     # Type the letter to the system
     if keyboard and letter_to_type:
-        speak(f'{letter_to_type}')
         keyboard.type(letter_to_type)
 
 
@@ -324,18 +320,18 @@ while True:
                 canvas = np.zeros_like(canvas) # Clear canvas on action
                 action_locked = True # <-- Lock after action
             
-            elif current_gesture == "fist": # (NEW: Clear All)
-                print("ACTION: Fist (Clear All)")
-                if keyboard and len(text_output) > 0:
-                    # Press backspace for every char in text_output
-                    for _ in range(len(text_output)):
-                        keyboard.press(Key.backspace)
-                        keyboard.release(Key.backspace)
+            # elif current_gesture == "fist": # (NEW: Clear All)
+            #     print("ACTION: Fist (Clear All)")
+            #     if keyboard and len(text_output) > 0:
+            #         # Press backspace for every char in text_output
+            #         for _ in range(len(text_output)):
+            #             keyboard.press(Key.backspace)
+            #             keyboard.release(Key.backspace)
                 
                 # Clear our internal state
-                canvas = np.zeros_like(canvas)
-                text_output = ""
-                action_locked = True # <-- Lock after action
+                # canvas = np.zeros_like(canvas)
+                # text_output = ""
+                # action_locked = True # <-- Lock after action
             
     else:
         prev_point = None
