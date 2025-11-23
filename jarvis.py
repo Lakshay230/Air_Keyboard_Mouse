@@ -9,7 +9,7 @@ MOUSE_SCRIPT = "air_mouse_2.py"
 KEYBOARD_SCRIPT = "key.py"
 
 # Greetings
-START_GREETING = "Jarvis Online. Hello Lakshay baby, I am listening."
+START_GREETING = "Jarvis Online. Hello Lakshay,I love you, I am listening."
 END_GREETING = "Shutting down system. Goodbye, sir."
 
 def speak(text):
