@@ -9,7 +9,7 @@ MOUSE_SCRIPT = "air_mouse_2.py"
 KEYBOARD_SCRIPT = "key.py"
 
 # Greetings
-START_GREETING = "Jarvis Online. Hello Lakshay,I love you, I am listening."
+START_GREETING = "Jarvis Online. Hello Lakshay, I am listening."
 END_GREETING = "Shutting down system. Goodbye, sir."
 
 def speak(text):
@@ -150,4 +150,5 @@ if __name__ == "__main__":
                 kill_process(current_process)
             
             speak(END_GREETING)
+
             sys.exit()
